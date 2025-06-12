@@ -141,6 +141,11 @@ def plot_extreme_images (results, synthetic_data, save_dir,
 
         ## Read the image from the path
         image = io.imread(row['image_path'])
+        #    If CSAW synthetic data, cut the top and last 4 rows to keep the
+        #    image dimensions the same as the CSAW real data. The group that
+        #    generated the CSAW synthetic data added this paddings.        
+        if 'csaw' in row['dataset_name'].lower():
+            image = image[4:-4, :]
 
         ## Find the pixels along edges
         data_index = np.where (np.array (synthetic_data['short_filename']) == short_filename)[0][0]

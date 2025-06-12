@@ -541,6 +541,13 @@ class ImageProcessor (object):
         # 1. Read the image
         image = self._image
         if self._do_intermediate_plots: self._plot_2Darray (image, "Original", self._output_intermediate_plot_path+"01_original_image.png")
+        #    If CSAW synthetic data, cut the top and last 4 rows to keep the
+        #    image dimensions the same as the CSAW real data. The group that
+        #    generated the CSAW synthetic data added this paddings.
+        if self.isCSAW and self.image_type == 'synthetic':
+            image = image[4:-4, :]
+            if self._do_intermediate_plots:
+                self._plot_2Darray (image, "CSAW synthetic cropped", self._output_intermediate_plot_path+"01.5_cropped_image.png")
 
         # 2. Smooth the image
         image = np.uint8 (gaussian(image, sigma=0.5) * 255)
