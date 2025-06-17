@@ -60,7 +60,7 @@ All files are expected to be in .png format.
 Run the process_datasets.py script to process real and synthetic images:
 
 ```
-python process_datasets.py --first_n_files 10 --verbose --outpath ./outputs/ --dataset_folder ../inputs/
+python process_datasets.py --first_n_files 10 --verbose --outpath ./outputs/ 
 ```
 
 This generates a `data.p` file containing pixel-wise shape descriptors and angular gradient distributions.
