@@ -972,7 +972,12 @@ class ImageProcessor (object):
         #    Identify the breast attachment points from 1st quarter of the trajectory.
         first_quarter = smoothed_angles_along_edge[:len(smoothed_angles_along_edge) // 4]
         #    Start point is near verticals (270 degrees) with a 10 degree uncertainty.
-        start_point = np.where(np.logical_and(first_quarter >= 260, first_quarter <= 280))[0][0]
+        try:
+            start_point = np.where(np.logical_and(first_quarter >= 260, first_quarter <= 280))[0][0]
+        except:
+            #    Elim (6/17): some images don't have vertical edge at the start.
+            #                 In this case, use the first pixel.
+            start_point = 0
 
         #  Ending point
         end_point = -1

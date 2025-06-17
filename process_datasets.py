@@ -31,8 +31,8 @@ import ImageProcessor
 ################################
 ## Define constants
 ################################
-datasets = {'VinDr':{'real':'VinDrReal',
-                     'synthetic':'VinDrSynthetic'}}
+datasets = {'CSAW':{'real':'/projects01/didsr-aiml/common_data/csaw-m/images/preprocessed/train/',
+                    'synthetic':'/projects01/didsr-aiml/common_data/SinKove_synthetic_mamography_csaw/train'}}
 
 ## List of datasets that contain only MLO images
 MLO_datasets = ['VinDr', 'CSAW'] 
@@ -181,7 +181,7 @@ def get_gradient_per_dataset (dataset_folder, dataset_name, first_n_files=None, 
             breast area, and pixels along edge for each image in the dataset.
     """
 
-    image_paths = glob.glob(dataset_folder + dataset_name + '/*.png')
+    image_paths = glob.glob(dataset_folder + '/*.png')
 
     data_dict = {'image_path': [], 'angle_gradients': [], 
                  'short_filename': [], 'pixels_along_edge': [],
@@ -203,15 +203,13 @@ def get_gradient_per_dataset (dataset_folder, dataset_name, first_n_files=None, 
 
     return data_dict
 
-def get_gradients (dataset_folder, first_n_files=None, verbose=False,
+def get_gradients (first_n_files=None, verbose=False,
                    n_distribution_bins=n_distribution_bins):
 
     ''' Process all datasets to extract angle gradients and save results.
 
         Inputs
         ------
-        dataset_folder : str
-            Path to the folder containing datasets with PNG images.
         first_n_files : int, optional
             If specified, only process the first N files in each dataset
             (default is None, meaning all files).
@@ -236,15 +234,16 @@ def get_gradients (dataset_folder, first_n_files=None, verbose=False,
         isCSAW = dataset_name == 'CSAW'
 
         for image_type in ['real', 'synthetic']:
-            dataset_name = dataset_info[image_type]
-            if verbose: print (f'Processing {image_type} dataset: {dataset_name}')
-            subdata = get_gradient_per_dataset(dataset_folder, dataset_name, first_n_files=first_n_files,
+            dataset_fullname = dataset_name + '_' + image_type
+            dataset_folder = dataset_info[image_type]
+            if verbose: print (f'Processing {image_type} dataset: {dataset_fullname}')
+            subdata = get_gradient_per_dataset(dataset_folder, dataset_fullname, first_n_files=first_n_files,
                                                isSynthetic=False, isMLO=isMLO, isCSAW=isCSAW,
                                                verbose=verbose)
             for key in data[image_type]:
                 if key == 'dataset_name': continue
                 data[image_type][key].extend(subdata[key])
-            data[image_type]['dataset_name'].extend([dataset_name] * len(subdata['image_path']))
+            data[image_type]['dataset_name'].extend([dataset_fullname] * len(subdata['image_path']))
 
     ## Once all the angle gradients are collected, get the normalized
     ## angle gradient distributions for each image. Binning is based on
@@ -262,16 +261,14 @@ if __name__ == '__main__':
     parser.add_argument('--first_n_files', type=int, default=None, help='Only process the first N files')
     parser.add_argument('--verbose', action='store_true', default=False, help='Enable verbose output')
     parser.add_argument('--outpath', type=str, required=True, help='Output file path for the data dictionary')
-    parser.add_argument('--dataset_folder', type=str, default='inputs/', help='Folder containing datasets with PNG images')
     args = parser.parse_args()
 
     verbose = args.verbose
     outpath = args.outpath
     first_n_files = args.first_n_files
-    dataset_folder = args.dataset_folder
 
     ## Process all data with angle gradients and save results
-    data = get_gradients (dataset_folder, first_n_files=first_n_files, verbose=verbose)
+    data = get_gradients (first_n_files=first_n_files, verbose=verbose)
 
     # Put them all into a python dictionary
     with open(outpath + 'data.p', 'wb') as f:
