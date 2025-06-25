@@ -235,28 +235,28 @@ class ImageProcessor (object):
         return self._mask_threshold
     @mask_threshold.setter
     def mask_threshold (self, value):
-        self._mask_threshold = self._check_positive_integer (mask_threshold, value)
+        self._mask_threshold = self._check_positive_integer ("mask_threshold", value)
 
     @property
     def edge_bin_counts (self):
         return self._edge_bin_counts
     @edge_bin_counts.setter
     def edge_bin_counts (self, value):
-        self._edge_bin_counts = self._check_positive_integer (edge_bin_counts, value)
+        self._edge_bin_counts = self._check_positive_integer ("edge_bin_counts", value)
 
     @property
     def distribution_bin_counts (self):
         return self._distribution_bin_counts
     @distribution_bin_counts.setter
     def distribution_bin_counts (self, value):
-        self._distribution_bin_counts = self._check_positive_integer (distribution_bin_counts, value)
+        self._distribution_bin_counts = self._check_positive_integer ("distribution_bin_counts", value)
 
     @property
     def smooth_window_size (self):
         return self._smooth_window_size
     @smooth_window_size.setter
     def smooth_window_size (self, value):
-        self._smooth_window_size = self._check_positive_integer (smooth_window_size, value)
+        self._smooth_window_size = self._check_positive_integer ("smooth_window_size", value)
 
     @property
     def do_reprocess (self):

@@ -21,6 +21,7 @@
 ################################
 ## Import packages
 ################################
+import os
 import glob
 import pickle
 import argparse
@@ -266,6 +267,10 @@ if __name__ == '__main__':
     verbose = args.verbose
     outpath = args.outpath
     first_n_files = args.first_n_files
+
+    ## Check if the output path exists, if not, create it
+    if not os.path.exists(outpath):
+        os.makedirs (outpath, exist_ok=True)
 
     ## Process all data with angle gradients and save results
     data = get_gradients (first_n_files=first_n_files, verbose=verbose)
