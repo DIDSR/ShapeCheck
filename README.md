@@ -57,6 +57,8 @@ All files are expected to be in .png format.
 # Software Usage
 
 1. Extract Shape Features
+Modify the dataset paths inside `process_datasets.py` (L35). Dataset should come in pairs, one with real dataset and one with the corresponding synthetic data that was generated using the real dataset. This tool was developed to compare the shape feature in the real dataset and the corresponding synthetic dataset. However, the code would still work if two real datasets or two synthetic datasets are provided to compare their shape feature. All images must be in PNG format.
+
 Run the process_datasets.py script to process real and synthetic images:
 
 ```

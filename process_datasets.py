@@ -32,6 +32,9 @@ import ImageProcessor
 ################################
 ## Define constants
 ################################
+## User must change the paths to the datasets below.
+## Key = dataset name
+## Value = dictionary with keys 'real' and 'synthetic' for the paths to the datasets
 datasets = {'CSAW':{'real':'/projects01/didsr-aiml/common_data/csaw-m/images/preprocessed/train/',
                     'synthetic':'/projects01/didsr-aiml/common_data/SinKove_synthetic_mamography_csaw/train'}}
 
