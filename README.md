@@ -5,9 +5,7 @@ This repository provides tools to process radiological medical images, extract s
 Synthetic data provides a promising solution to address data scarcity for training machine learning models; however, adopting it without proper quality assessments may introduce artifacts, distortions, and unrealistic features that compromise model performance and clinical utility. This work introduces a novel knowledge-based method for detecting network-induced shape artifacts in synthetic images. The method can detect anatomically unrealistic images irrespective of the generative model used and provides interpretability through its knowledge-based design. We demonstrate the effectiveness of the method for identifying network-induced shape artifacts using two synthetic mammography datasets. A reader study further confirmed that images identified by the method as likely containing network-induced artifacts were also flagged by human readers. This method is a step forward in the responsible use of synthetic data by ensuring that synthetic images adhere to realistic anatomical and shape constraints.
 
 # Tool Reference
-* RST Reference Number: RST25AIxx.xx
-* Date of Publication: xx/xx/2025
-* Recommended Citation: U.S. Food and Drug Administration. (2025). ShapeCheck: Shape Anomaly Detection in Mammogram Images (RST25AIxx.xx). Placeholder for CDRH RST URL.
+Deshpande, R., Thompson, Y.L.E., and Zamzmi, G. (2025). ShapeCheck: Feature extraction tool to identify anomalies in synthetic images. https://github.com/DIDSR/ShapeCheck/
 
 # Disclaimer
 ## About the Catalog of Regulatory Science Tools
@@ -21,7 +19,7 @@ pip install -r requirements.txt
 ```
 
 ## Required Packages
-The following Python packages are required:
+The following Python packages include:
 
 * numpy
 * scipy
@@ -30,7 +28,7 @@ The following Python packages are required:
 * scikit-image
 * scikit-learn
 
-Project tested on Python 3.9.4.
+The full list of required packages can be found in requirements.txt. Project was tested on Python 3.9.4.
 
 # Project Structure
 ```
@@ -66,14 +64,16 @@ Run the process_datasets.py script to process real and synthetic images:
 python process_datasets.py --first_n_files 10 --verbose --outpath ./outputs/ 
 ```
 
-This generates a `data.p` file containing pixel-wise shape descriptors and angular gradient distributions.
+This generates a pickled dictionary `data.p` file containing pixel-wise shape descriptors and angular gradient distributions.
 
 2. Detect Shape Anomalies
 Use the processed data to detect anomalies:
 
 ```
-python detect_shape_anomaly.py --data_path ./outputs/data.p --do_plots
+python detect_shape_anomaly.py --data_path ./outputs/data.p --out_path ./outputs/ --do_plots
 ```
+
+The `--data_path` points to the output from the previous step, and `--out_path` is where output csv and (optional) plots will be stored.
 
 Optional flags:
 * `--verbose`: Print detailed progress
