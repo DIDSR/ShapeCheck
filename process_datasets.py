@@ -25,9 +25,13 @@ import os
 import glob
 import pickle
 import argparse
+import warnings
 import numpy as np
 
 import ImageProcessor
+
+# Ignore all UserWarnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 ################################
 ## Define constants
@@ -35,8 +39,8 @@ import ImageProcessor
 ## User must change the paths to the datasets below.
 ## Key = dataset name
 ## Value = dictionary with keys 'real' and 'synthetic' for the paths to the datasets
-datasets = {'CSAW':{'real':'/projects01/didsr-aiml/common_data/csaw-m/images/preprocessed/train/',
-                    'synthetic':'/projects01/didsr-aiml/common_data/SinKove_synthetic_mamography_csaw/train'}}
+datasets = {'VinDr':{'real':'example_inputs/real/',
+                     'synthetic':'example_inputs/synthetic/'}}
 
 ## List of datasets that contain only MLO images
 MLO_datasets = ['VinDr', 'CSAW'] 

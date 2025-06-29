@@ -15,6 +15,7 @@
 import os
 import pickle
 import argparse
+import warnings
 
 import numpy as np
 import pandas as pd
@@ -23,6 +24,9 @@ from matplotlib.gridspec import GridSpec
 
 from skimage import io
 from sklearn.ensemble import IsolationForest
+
+# Ignore all UserWarnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 ################################
 ## Define constants
@@ -254,7 +258,7 @@ def plot_score_distributions (sub_results, data, save_dir):
     plt.savefig(save_dir + '/anomaly_score_distribution.png', bbox_inches='tight', dpi=600)
     plt.close()
 
-def analysis (data, csv_path, thresholds=extreme_percentiles, do_plots=False):
+def analysis (data, out_path, thresholds=extreme_percentiles, do_plots=False):
 
     ''' Perform analysis on the data to detect shape anomalies using
         Isolation Forest. 
@@ -263,8 +267,8 @@ def analysis (data, csv_path, thresholds=extreme_percentiles, do_plots=False):
         ------
         data: dict
             Dictionary containing real and synthetic data.
-        csv_path: str
-            Path to save the results as a CSV file and plots
+        out_path: str
+            Directory to save the results and plots.
         thresholds: list, optional
             List of percentile thresholds to determine extreme images.
             Default is [0.1, 99.9].
@@ -286,18 +290,18 @@ def analysis (data, csv_path, thresholds=extreme_percentiles, do_plots=False):
     results['short_filename'] = data['synthetic']['short_filename']
 
     ## Save results to a csv file
+    csv_path = os.path.join(out_path, 'shape_anomaly_results.csv')
     results.to_csv (csv_path, index=False)
     if not do_plots: return
 
     ## Visualize best and worst images
-    plot_dir = os.path.dirname(csv_path)
-    save_dir = os.path.join(plot_dir, 'extreme_images')
+    save_dir = os.path.join(out_path, 'extreme_images')
     plot_extreme_images (results, data['synthetic'], save_dir,
                          thresholds=thresholds, plot_bad=True)
     plot_extreme_images (results, data['synthetic'], save_dir,
                          thresholds=thresholds, plot_bad=False)                         
     ## Visualize score and feature distributions
-    plot_score_distributions (results[['scores', 'dataset_name']], data, plot_dir)
+    plot_score_distributions (results[['scores', 'dataset_name']], data, out_path)
 
 ################################
 ## Script starts here
@@ -308,20 +312,26 @@ if __name__ == '__main__':
     parser.add_argument('--verbose', action='store_true', default=False, help='Enable verbose output')
     parser.add_argument('--data_path', type=str, help='File path to the data dictionary')
     parser.add_argument('--do_plots', action='store_true', default=False, help='Enable plotting of results')
+    parser.add_argument('--out_path', type=str, help='File path to store csv and output plots')
     parser.add_argument('--bad_percentile', type=float, default=extreme_percentiles[0], help='Percentile threshold for bad images')
     parser.add_argument('--good_percentile', type=float, default=extreme_percentiles[1], help='Percentile threshold for good images')
     args = parser.parse_args()
 
     verbose = args.verbose
     do_plots = args.do_plots
+    out_path = args.out_path
     data_path = args.data_path
     extreme_percentiles = [args.bad_percentile, args.good_percentile]
 
+    ## Create out_path if it does not exist
+    if not os.path.exists(out_path):
+        os.makedirs(out_path, exist_ok=True)
+
+    ## Load the data dictionary from the provided path
     with open (data_path, 'rb') as f:
         data = pickle.load(f)
     f.close()
 
     ## Define the path to save results
-    csv_path = os.path.join(os.path.dirname(data_path), 'shape_anomaly_results.csv')
-    analysis (data, csv_path, thresholds=extreme_percentiles, do_plots=do_plots)
+    analysis (data, out_path, thresholds=extreme_percentiles, do_plots=do_plots)
 
