@@ -1,5 +1,8 @@
 # Shape Check
-This repository provides tools to process radiological medical images, extract shape features, and identify anomalies in synthetic images compared to real ones using machine learning (Isolation Forest). This tool was applied to check the shape of breast boundary in mammogram images.
+This repository provides tools to compare shapes and identify shape anomalies in any two medical imaging datasets (when masks are available for the region of interest). We demonstrate its use for evaluating synthetic images, but the tool can also be employed for assessing different patient datasets.
+
+Specifically, the tool processes medical images, extracts shape features, and identify anomalies in synthetic images compared to patient images using machine learning (Isolation Forest). This tool was applied to check the shape of breast boundary in mammogram images and can be adapted for other imaging modalities or applications.
+
 
 # Purpose
 Synthetic data provides a promising solution to address data scarcity for training machine learning models; however, adopting it without proper quality assessments may introduce artifacts, distortions, and unrealistic features that compromise model performance and clinical utility. This work introduces a novel knowledge-based method for detecting network-induced shape artifacts in synthetic images. The method can detect anatomically unrealistic images irrespective of the generative model used and provides interpretability through its knowledge-based design. We demonstrate the effectiveness of the method for identifying network-induced shape artifacts using two synthetic mammography datasets. A reader study further confirmed that images identified by the method as likely containing network-induced artifacts were also flagged by human readers. This method is a step forward in the responsible use of synthetic data by ensuring that synthetic images adhere to realistic anatomical and shape constraints.
