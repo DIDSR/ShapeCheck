@@ -1058,13 +1058,6 @@ class ImageProcessor (object):
                                   for (idx, ii) in enumerate(cumsum_bin_widths[:-1])]
         binned_angle_gradients = np.array (binned_angle_gradients)
         binned_angle_gradients = binned_angle_gradients[~np.isnan (binned_angle_gradients)]
-        #############################################################################################
-        ## CAUTION:
-        ## To exactly match Rucha's code, I have the "2.2.g" formatting to round
-        ## the binned angle gradients to 2 decimal places. This should be removed
-        ## when the code is ready for production.
-        binned_angle_gradients = np.array ([float ("%2.2g" % (v)) for v in list(binned_angle_gradients)])
-        #############################################################################################
         self._binned_angle_gradients = binned_angle_gradients
 
         ## Plot if asked
