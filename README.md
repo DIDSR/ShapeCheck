@@ -1,14 +1,14 @@
 # Shape Check
-This repository provides tools to compare shapes and identify shape anomalies in any two medical imaging datasets (when masks are available for the region of interest). We demonstrate its use for evaluating synthetic images, but the tool can also be employed for assessing different patient datasets.
+This repository provides software method to compare shapes and identify shape anomalies synthetic image datasets. We demonstrate its use for evaluating synthetic images, however, ShapeCheck may also be employed for assessing different patient datasets.
 
-Specifically, the tool processes medical images, extracts shape features, and identify anomalies in synthetic images compared to patient images using machine learning (Isolation Forest). This tool was applied to check the shape of breast boundary in mammogram images and can be adapted for other imaging modalities or applications.
+Specifically, this metho processes medical images, extracts shape features, and identify anomalies in synthetic images compared to patient images using machine learning (Isolation Forest). It was applied to check the shape of breast boundary in mammogram images and may be adapted for other imaging modalities or applications.
 
 
 # Purpose
 Synthetic data provides a promising solution to address data scarcity for training machine learning models; however, adopting it without proper quality assessments may introduce artifacts, distortions, and unrealistic features that compromise model performance and clinical utility. This work introduces a novel knowledge-based method for detecting network-induced shape artifacts in synthetic images. The introduced method utilizes a two-stage framework comprising (i) a novel feature extractor that constructs a specialized feature space by analyzing the per-image distribution of angle gradients along anatomical boundaries, and (ii) an isolation forest-based anomaly detector. The method can detect anatomically unrealistic images irrespective of the generative model used and provides interpretability through its knowledge-based design. We demonstrate the effectiveness of the method for identifying network-induced shape artifacts using two synthetic mammography datasets. A reader study further confirmed that images identified by the method as likely containing network-induced artifacts were also flagged by human readers. This method is a step forward in the responsible use of synthetic data by ensuring that synthetic images adhere to realistic anatomical and shape constraints.
 
-# Tool Reference
-Deshpande, R., Thompson, Y.L.E., and Zamzmi, G. (2025). ShapeCheck: Feature extraction tool to identify anomalies in synthetic images. https://github.com/DIDSR/ShapeCheck/
+# Reference
+Deshpande, R., Thompson, Y.L.E., Zamzmi, G., Seyed Kahaki (2025). ShapeCheck: Software method for identifying shape anomalies in synthetic images. https://github.com/DIDSR/ShapeCheck/
 
 # Installation
 Install all dependencies using the provided requirements.txt file:
