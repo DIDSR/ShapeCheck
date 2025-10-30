@@ -1,5 +1,5 @@
 # Shape Check
-This repository provides software method to compare shapes and identify shape anomalies synthetic image datasets. We demonstrate its use for evaluating synthetic images, however, ShapeCheck may also be employed for assessing different patient datasets.
+This repository provides software method to compare shapes and identify shape anomalies in synthetic image datasets. We demonstrate its use for evaluating synthetic images, however, ShapeCheck may also be employed for assessing different patient datasets.
 
 Specifically, this metho processes medical images, extracts shape features, and identify anomalies in synthetic images compared to patient images using machine learning (Isolation Forest). It was applied to check the shape of breast boundary in mammogram images and may be adapted for other imaging modalities or applications.
 
